@@ -20,7 +20,7 @@ const Layout = () => {
             to="/clientes/nuevo">Nuevo Cliente</Link>
         </nav>
       </div>
-      <div className='md:w-3/4'>
+      <div className='md:w-3/4 p-10 md:h-screen overflow-scroll'>
         <Outlet />
       </div>
 
