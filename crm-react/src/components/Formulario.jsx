@@ -10,10 +10,15 @@ const Formulario = () => {
                     .min(3, 'El nombre es muy corto')
                     .max(20, 'El nombre es muy largo')
                     .required('El nombre del cliente es obligatorio'),
-        empresa : '',
-        email: '',
-        telefono: '',
-        notas: ''
+        empresa : Yup.string()
+                    .required('El nombre de la empresa es Obligatorio'),
+        email: Yup.string()
+                .required('El email es obligatorio')
+                .email('Email no valido'),
+        telefono: Yup.number()
+                    .typeError('El numero no es valido')
+                    .integer('Numero no valido')
+                    .positive('Numero no valido')
     })
 
     const handleSubmit = (valores) => {
@@ -53,7 +58,8 @@ const Formulario = () => {
 
                          {errors.nombre && touched.nombre ? (
                             <Alerta>{errors.nombre}</Alerta>
-                         ) : null }
+                            ) : null
+                         }
                     </div>
                     <div className='mb-4'>
                         <label className='text-gray-800' htmlFor='empresa'>Empresa:</label>
@@ -64,6 +70,10 @@ const Formulario = () => {
                             placeholder="Empresa  del cliente"
                             name="empresa"
                          />
+                        {errors.empresa && touched.empresa ? (
+                            <Alerta>{errors.empresa}</Alerta>
+                             ) : null 
+                        }
                     </div>
                     <div className='mb-4'>
                         <label className='text-gray-800' htmlFor='email'>Email:</label>
@@ -74,6 +84,10 @@ const Formulario = () => {
                             placeholder="Email del cliente"
                             name="email"
                          />
+                        {errors.email && touched.email ? (
+                            <Alerta>{errors.email}</Alerta>
+                            ) : null 
+                        }
                     </div>
                     <div className='mb-4'>
                         <label className='text-gray-800' htmlFor='telefono'>Telefono:</label>
