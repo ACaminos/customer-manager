@@ -1,9 +1,11 @@
 import React from 'react'
 import {Formik, Form, Field} from 'formik'
+import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import Alerta from './Alerta'
 
 const Formulario = () => {
+    const navigate = useNavigate()
 
     const nuevoClienteSchema = Yup.object().shape({
         nombre : Yup.string()
@@ -21,8 +23,26 @@ const Formulario = () => {
                     .positive('Numero no valido')
     })
 
-    const handleSubmit = (valores) => {
-        console.log(valores)
+    const handleSubmit = async (valores) => {
+        try{
+            const url = 'http://localhost:4000/clientes'
+
+            const respuesta = await fetch(url, {
+                method: 'POST', //se agrega esta linea siempre y cuando sea un metodo diferente a GET, caso contrario no se agrega nada ya que viene por defecto.
+                body: JSON.stringify(valores),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            console.log(respuesta)
+            const resultado = await respuesta.json()
+            console.log(resultado)
+
+            navigate('/clientes')
+        } catch(error){
+            console.log(error)
+        }
+        
     }
   return (
     <div className='bg-white mt-10 px-5 py-10 rounded-md shadow-md md:w-3/4 mx-auto'>
@@ -36,8 +56,9 @@ const Formulario = () => {
                 telefono: '',
                 notas: ''
             }}
-            onSubmit={ (values) => {
+            onSubmit={ async (values, {resetForm}) => {
                 handleSubmit(values);
+                resetForm()
             }}
 
             validationSchema={nuevoClienteSchema}
