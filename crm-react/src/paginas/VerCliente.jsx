@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom"
 import Spinner from "../components/Spinner"
 
 const VerCliente = () => {
-    const { id } = useParams()
     const [cliente, setCliente] = useState({})
     const [cargando, setCargando] = useState(false)
+    const { id } = useParams()
 
     useEffect(()=>{
         setCargando(!cargando)
